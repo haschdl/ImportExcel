@@ -231,7 +231,13 @@
                             }
                             else {
                                 foreach ($P in $PropertyNames) {
-                                    $NewRow[$P.Value] = $sheet.Cells[$R, $P.Column].Value
+                                    $cell = $sheet.Cells[$R, $P.Column]
+                                    if ($cell.Style.Indent -gt 0 ) {
+                                       $NewRow[$P.Value] = $cell.padLeft($cell.Style.Indent , '+' )
+                                    }
+                                    else { 
+                                      $NewRow[$P.Value] = $cell.Value
+                                    }
                                     #    Write-Verbose "Import cell '$($Worksheet.Cells[$R, $P.Column].Address)' with property name '$($p.Value)' and value '$($Worksheet.Cells[$R, $P.Column].Value)'."
                                 }
                             }
